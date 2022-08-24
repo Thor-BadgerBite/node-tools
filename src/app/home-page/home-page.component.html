@@ -1,0 +1,124 @@
+<div>
+  <div class="row">
+    <div class="col">
+      <div
+        class="about-block"
+        [ngClass]="showAbout ? 'full-about' : 'short-about'"
+      >
+        <p class="short-text" *ngIf="!showAbout" (click)="showAbout=!showAbout">
+          Validation has never been so easy yet...
+        </p>
+        <p *ngIf="showAbout">
+          Welcome to Nodejumper's Open Source multi tool for cosmos based networks!
+          <br><br>
+          🚀 🚀 🚀 Developing by Nodejumper with love
+          <br><br>
+          Nodejumper web app is a multi tool for cosmos based networks. It provides a whole bunch of helpful support features for cosmos blockchains. It's built on dedicated server infrastructure with advanced monitoring and alerting system on top of it. Nodejumper supports more than 20 networks and the number is constantly growing.
+          <br><br>
+          🧗 What we are doing:
+          <br><br>
+          For each of our supported networks we provide professional validation services and advanced on-chain analytics tools such as:
+          <br><br>1. Node Installation scripts with manual & automatic options.
+          <br>2. Node synchronization scripts.
+          <br>3. Public RPC endpoints.
+          <br>4. Fresh network snapshots.
+          <br>5. Cheat sheet for most popular blockchain commands (validator profile, wallet, token management and etc.).
+          <br>6. Blockchain ecosystem/tools overview with user-friendly interface (both web & mobile).
+          <br>7. Blockchain analytics for community: tokenomics, price/trading stats, comission & voting power distribution.
+          <br><br>For more information please refer to our gihub page: <a href="https://github.com/nodejumper-org" target="_blank">https://github.com/nodejumper-org</a>
+        </p>
+        <p class="who-we-are-button" (click)="showAbout=!showAbout">
+          {{ showAbout ? "Got it!" : "Who we are?" }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-12 col-lg-6">
+      <div class="search-field">
+        <span class="search-icon">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </span>
+        <input
+          class="form-control shadow-none rounded-pill"
+          placeholder="chain name"
+          type="search"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="onSearchQueryChange($event)"
+        />
+      </div>
+    </div>
+    <div class="col col-12 col-sm-5 col-md-5 col-lg-4">
+      <div class="tabs-container">
+        <div
+          class="tab-button"
+          (click)="stateService.chainType.next('all')"
+          [ngClass]="chainType == 'all' ? 'active': ''"
+        >
+          All
+        </div>
+        <div
+          class="tab-button"
+          (click)="stateService.chainType.next('mainnet')"
+          [ngClass]="chainType == 'mainnet' ? 'active': ''"
+        >
+          Mainnet
+        </div>
+        <div
+          class="tab-button"
+          (click)="stateService.chainType.next('testnet')"
+          [ngClass]="chainType == 'testnet' ? 'active': ''"
+        >
+          Testnet
+        </div>
+      </div>
+    </div>
+    <div class="col col-12 col-sm-7 col-md-7 col-lg-2">
+      <div class="chains-count">{{mainnetChains.length + testnetChains.length + archiveChains.length}} chain(s)</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="title-container" *ngIf="mainnetChains.length">
+      <p class="title">Mainnet</p>
+    </div>
+    <div class="chain-cards-container" *ngIf="mainnetChains.length">
+      <div
+        *ngFor="let chain of mainnetChains"
+        [routerLink]="['/' + chain.id + (chain.summaryDisabled ? '/installation' : '')]"
+        class="col col-12 col-sm-6 col-md-4 col-lg-3"
+      >
+        <app-chain-card [chain]="chain"></app-chain-card>
+      </div>
+    </div>
+    <div class="title-container" *ngIf="testnetChains.length">
+      <p class="title">Testnet</p>
+    </div>
+    <div class="chain-cards-container" *ngIf="testnetChains.length">
+      <div
+        *ngFor="let chain of testnetChains"
+        [routerLink]="['/' + chain.id + (chain.summaryDisabled ? '/installation' : '')]"
+        class="col col-12 col-sm-6 col-md-4 col-lg-3"
+      >
+        <app-chain-card [chain]="chain"></app-chain-card>
+      </div>
+    </div>
+    <div class="title-container" *ngIf="archiveChains.length">
+      <p class="title">Archive</p>
+    </div>
+    <div class="chain-cards-container" *ngIf="archiveChains.length">
+      <div
+        *ngFor="let chain of archiveChains"
+        [routerLink]="['/' + chain.id + (chain.summaryDisabled ? '/installation' : '')]"
+        class="col col-12 col-sm-6 col-md-4 col-lg-3"
+      >
+        <app-chain-card [chain]="chain"></app-chain-card>
+      </div>
+    </div>
+    <div
+      class="empty-result"
+      *ngIf="mainnetChains.length === 0 && testnetChains.length === 0"
+    >
+      <p>Oops, we can't find any results.</p>
+    </div>
+  </div>
+</div>
