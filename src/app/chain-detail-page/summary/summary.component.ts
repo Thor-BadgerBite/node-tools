@@ -188,7 +188,7 @@ export class SummaryComponent implements OnInit {
   }
 
   extractBondedTokensRatio(chain: Chain, summary: any): number {
-    let bondedTokens = summary.bondedTokens;
+    let bondedTokens = summary.chain.params.bonded_tokens;
     let totalSupply = this.findTotalSupply(chain, summary);
     return +(bondedTokens / totalSupply * 100).toFixed(2);
   }
