@@ -125,7 +125,7 @@ export class SummaryComponent implements OnInit {
   extractBlockTime(summary: any): string {
     return Intl.NumberFormat('en-US', {
       maximumFractionDigits: 2,
-    }).format(summary.blockTime) + 's';
+    }).format(summary.chain.params.actual_block_time) + 's';
   }
 
   extractPrice(coingekoSummary: any): string {
@@ -141,7 +141,7 @@ export class SummaryComponent implements OnInit {
   }
 
   extractInflation(summary: any): string {
-    let inflation = summary.inflation;
+    let inflation = summary.chain.params.inflation;
     if (!inflation) {
       return '-';
     }
@@ -155,11 +155,10 @@ export class SummaryComponent implements OnInit {
     }).format(val);
   }
 
-  extractBondedTokens(chain: Chain, summary: any): string {
-    let bondedTokens = summary.bondedTokens / Math.pow(10, chain.denomPow);
-    return this.utilsService.compactNumber(bondedTokens);
+  extractBondedTokens(chain: Chain, summary: any): number {
+    let bondedTokens = summary.chain.params.bonded_tokens / Math.pow(10, chain.denomPow);
+    return bondedTokens
   }
-
   extractTotalSupply(chain: Chain, summary: any): string {
     let totalSupply = this.findTotalSupply(chain, summary);
     totalSupply = totalSupply / Math.pow(10, chain.denomPow);
