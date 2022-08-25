@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
-import { CHAINS } from "../data/data";
-import { Chain } from "../model/chain";
-import { environment } from "../../environments/environment";
-import { HttpClient } from "@angular/common/http";
-import { UtilsService } from "./utils.service";
+import { CHAINS } from '../data/data';
+import { Chain } from '../model/chain';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { UtilsService } from './utils.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChainService {
-
   activeChain?: Chain;
 
-  constructor(private http: HttpClient,
-              private utilsService: UtilsService) {
-  }
+  constructor(private http: HttpClient, private utilsService: UtilsService) {}
 
-  getChains(chainType?: string, searchText?: string, isArchive?: boolean): Chain[] {
-    const lowerCaseQuery = searchText?.toLocaleLowerCase() || ""
-    return CHAINS
-      .filter(chain => this.filterByArchive(chain, isArchive))
-      .filter(chain => this.filterByType(chain, chainType))
-      .filter(chain => this.filterByQuery(chain, lowerCaseQuery))
+  getChains(
+    chainType?: string,
+    searchText?: string,
+    isArchive?: boolean
+  ): Chain[] {
+    const lowerCaseQuery = searchText?.toLocaleLowerCase() || '';
+    return CHAINS.filter((chain) => this.filterByArchive(chain, isArchive))
+      .filter((chain) => this.filterByType(chain, chainType))
+      .filter((chain) => this.filterByQuery(chain, lowerCaseQuery))
       .sort((chain1, chain2) => {
         const chainName1 = chain1.chainName.toLowerCase();
         const chainName2 = chain2.chainName.toLowerCase();
@@ -36,17 +36,23 @@ export class ChainService {
   }
 
   filterByType(chain: Chain, chainType?: string): boolean {
-    return chainType == 'all'
-      || (chainType == 'mainnet' && !chain.isTestnet || false)
-      || (chainType == 'testnet' && !!chain.isTestnet || false);
+    return (
+      chainType == 'all' ||
+      (chainType == 'mainnet' && !chain.isTestnet) ||
+      false ||
+      (chainType == 'testnet' && !!chain.isTestnet) ||
+      false
+    );
   }
 
   filterByQuery(chain: Chain, query: string): boolean {
-    return chain.chainName.toLocaleLowerCase().includes(query)
-      || chain.chainId.toLocaleLowerCase().includes(query);
+    return (
+      chain.chainName.toLocaleLowerCase().includes(query) ||
+      chain.chainId.toLocaleLowerCase().includes(query)
+    );
   }
 
-  filterByArchive(chain: Chain, isArchive?: boolean) : boolean {
+  filterByArchive(chain: Chain, isArchive?: boolean): boolean {
     return !!chain.isArchive === !!isArchive;
   }
 
@@ -59,15 +65,21 @@ export class ChainService {
   }
 
   getChainValidators(apiChainId: string) {
-    return this.http.get(`https://validators.cosmos.directory/chains/${apiChainId}`);
+    return this.http.get(
+      `https://validators.cosmos.directory/chains/${apiChainId}`
+    );
   }
 
   getCoingekoSummary(coingekoCoinId: string) {
-    return this.http.get(`https://api.coingecko.com/api/v3/coins/${coingekoCoinId}`);
+    return this.http.get(
+      `https://api.coingecko.com/api/v3/coins/${coingekoCoinId}`
+    );
   }
 
   getCoingekoMarketData(coingekoCoinId: string, timeIntervalDays: number) {
-    return this.http.get(`https://api.coingecko.com/api/v3/coins/${coingekoCoinId}/market_chart?vs_currency=usd&days=${timeIntervalDays}&interval=daily`);
+    return this.http.get(
+      `https://api.coingecko.com/api/v3/coins/${coingekoCoinId}/market_chart?vs_currency=usd&days=${timeIntervalDays}&interval=daily`
+    );
   }
 
   getChainStatus(chain: Chain) {
@@ -80,14 +92,19 @@ export class ChainService {
 
   getChainSnapshotInfo(chain: Chain) {
     const id = chain.id;
-    const salt = (new Date()).getTime();
+    const salt = new Date().getTime();
     const snapshotStateFileLocation = `${chain?.snapshotServer}/${id}/current_state.json?${salt}`;
     return this.http.get(snapshotStateFileLocation);
   }
 
   getUnsafeResetAllString(chain: Chain): string {
     if (chain.newWayUnsafeResetAll) {
-      return this.getChainBinaryName(chain) + ' tendermint unsafe-reset-all --home $HOME/' + chain.homeDirectoryName + " --keep-addr-book";
+      return (
+        this.getChainBinaryName(chain) +
+        ' tendermint unsafe-reset-all --home $HOME/' +
+        chain.homeDirectoryName +
+        ' --keep-addr-book'
+      );
     }
     return this.getChainBinaryName(chain) + ' unsafe-reset-all';
   }
@@ -98,7 +115,8 @@ export class ChainService {
 
   getArchiveReason(chain: Chain): string {
     if (chain.endedAt) {
-      const endedAtNTimeAgo = this.utilsService.humanReadableTimeDifferenceString(chain.endedAt);
+      const endedAtNTimeAgo =
+        this.utilsService.humanReadableTimeDifferenceString(chain.endedAt);
       const chainNet = chain.isTestnet ? 'Testnet' : 'Mainnet';
       return `${chainNet} ended ${endedAtNTimeAgo} ago`;
     }
