@@ -165,15 +165,6 @@ export class SummaryComponent implements OnInit {
     return this.utilsService.compactNumber(totalSupply);
   }
 
-  findTotalSupply(chain: Chain, summary: any) {
-    let totalSupply = 0;
-    summary.chain.params.total_supply.forEach(function (item: any) {
-      if (item.denom === chain.denomName) {
-        totalSupply = +item.amount;
-      }
-    });
-    return totalSupply
-  }
 
   extractCommunityPool(chain: Chain, summary: any): string {
     let communityPool = 0;
@@ -188,8 +179,7 @@ export class SummaryComponent implements OnInit {
 
   extractBondedTokensRatio(chain: Chain, summary: any): number {
     let bondedTokens = summary.chain.params.bonded_tokens;
-    let totalSupply = this.findTotalSupply(chain, summary);
-    return +(bondedTokens / totalSupply * 100).toFixed(2);
+    return bondedTokens
   }
 
   extractTokensDistributionRatio(validators: any): number {
