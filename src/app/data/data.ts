@@ -44,6 +44,7 @@ export const CHAINS: Chain[] = [
     discord: "https://discord.gg/GaubcRyg3t",
     blockExplorer: "https://www.mintscan.io/bitcanna",
     validatorUrl: "https://ping.pub/bitcanna/staking/bcnavaloper16kctxuen3x2avvjj2mdwsl6g8n7d4vjkn45gqa",
+    apiChainId: "bitcanna",
     denomName: "ubcna",
     denomPow: 6,
     isProjectSupportUs: true,

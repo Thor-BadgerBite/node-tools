@@ -55,11 +55,11 @@ export class ChainService {
   }
 
   getChainSummary(apiChainId: string) {
-    return this.http.get(`${environment.baseUrl}/api/v1/${apiChainId}/summary`);
+    return this.http.get(`https://chains.cosmos.directory/${apiChainId}`);
   }
 
   getChainValidators(apiChainId: string) {
-    return this.http.get(`${environment.baseUrl}/api/v1/${apiChainId}/validators`);
+    return this.http.get(`https://validators.cosmos.directory/chains/${apiChainId}`);
   }
 
   getCoingekoSummary(coingekoCoinId: string) {
