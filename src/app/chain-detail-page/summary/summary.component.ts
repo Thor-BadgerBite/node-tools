@@ -160,14 +160,14 @@ export class SummaryComponent implements OnInit {
     return bondedTokens
   }
   extractTotalSupply(chain: Chain, summary: any): string {
-    let totalSupply = this.findTotalSupply(chain, summary);
+    let totalSupply = summary.chain.params.total_supply;
     totalSupply = totalSupply / Math.pow(10, chain.denomPow);
     return this.utilsService.compactNumber(totalSupply);
   }
 
   findTotalSupply(chain: Chain, summary: any) {
     let totalSupply = 0;
-    summary.totalSupply.supply.forEach(function (item: any) {
+    summary.chain.params.total_supply.forEach(function (item: any) {
       if (item.denom === chain.denomName) {
         totalSupply = +item.amount;
       }
