@@ -183,16 +183,17 @@ export class SummaryComponent implements OnInit {
   }
 
   extractTokensDistributionRatio(validators: any): number {
+    validators.validators.sort((a: any, b: any) => b.rank - a.rank)
     let totalVotingPower = 0;
-    validators.validators.forEach((validator: any) => {
-      totalVotingPower += validators.validators.tokens;
+    validators.validators.forEach((validators: any) => {
+      totalVotingPower += validators.delegations.total_tokens_display;
     });
     let validatorsNum = 0;
     let tmpVotingPower = 0;
     let percentage = 0;
     for (let i = 0; i < validators.validators.length && !percentage; i++) {
       let validator = validators.validators[i];
-      tmpVotingPower += validator.tokens;
+      tmpVotingPower +=validator.delegations.total_tokens_display;
       validatorsNum++;
       if (tmpVotingPower / totalVotingPower * 100 >= 50) {
         percentage = +(validatorsNum / validators.validators.length * 100).toFixed(2);
