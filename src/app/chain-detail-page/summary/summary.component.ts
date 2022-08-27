@@ -141,7 +141,7 @@ export class SummaryComponent implements OnInit {
   }
 
   extractInflation(summary: any): string {
-    let inflation = summary.chain.params.inflation;
+    let inflation = summary.chain.params.base_inflation;
     if (!inflation) {
       return '-';
     }
@@ -184,8 +184,8 @@ export class SummaryComponent implements OnInit {
 
   extractTokensDistributionRatio(validators: any): number {
     let totalVotingPower = 0;
-    validators.forEach((validator: any) => {
-      totalVotingPower += validator.votingPower;
+    validators?.validators.forEach((validator: any) => {
+      totalVotingPower += validators.validators.tokens;
     });
     let validatorsNum = 0;
     let tmpVotingPower = 0;
@@ -407,8 +407,8 @@ export class SummaryComponent implements OnInit {
 
   drawVotingPowerChart(validators: any, chain: Chain): void {
     let _this = this;
-    validators.sort((a: any, b: any) => b.votingPower - a.votingPower)
-    let top20validators = validators.slice(0, 9);
+    validators.validators.sort((a: any, b: any) => b.votingPower - a.votingPower)
+    let top20validators = validators.validators.slice(0, 9);
     let labels = top20validators.map((validator: any) => validator.moniker);
     let data = top20validators.map((validator: any) => validator.votingPower / Math.pow(10, chain.denomPow))
     let votingPowerChart = new Chart('votingPowerChart', {
@@ -491,7 +491,7 @@ export class SummaryComponent implements OnInit {
 
   drawCommissionDistributionChart(validators: any): void {
     let commissionDistribution: any = {};
-    validators.forEach((validator: any) => {
+    validators.validators.forEach((validator: any) => {
       if (!commissionDistribution[validator.commission]) {
         commissionDistribution[validator.commission] = 0;
       }
@@ -581,8 +581,8 @@ export class SummaryComponent implements OnInit {
 
   drawMissedBlocksChart(validators: any): void {
 
-    let labels = validators.filter((validator: any) => validator.missedBlocks).map((validator: any) => validator.moniker);
-    let data = validators.filter((validator: any) => validator.missedBlocks).map((validator: any) => validator.missedBlocks);
+    let labels = validators.validators.filter((validator: any) => validator.missedBlocks).map((validator: any) => validator.moniker);
+    let data = validators.validators.filter((validator: any) => validator.missedBlocks).map((validator: any) => validator.missedBlocks);
 
     if (!data.length) {
       this.noMissedBlocks = true;

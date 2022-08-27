@@ -9,19 +9,19 @@
     <div class="col col-12 col-sm-12 col-md-6 col-lg-4">
       <div class="block">
         <div class="title">Height</div>
-        <div class="value">{{summary?.blockHeight | number: '2.'}}</div>
+        <div class="value">{{summary?.chain?.height | number: '2.'}}</div>
       </div>
     </div>
     <div class="col col-12 col-sm-12 col-md-6 col-lg-4">
       <div class="block">
-        <div class="title">Transactions</div>
-        <div class="value">{{summary?.totalTx | number: '2.'}}</div>
+        <div class="title">Calculated APY</div>
+        <div class="value">{{summary?.chain.params.calculated_apr | percent: '0.2-2'}}</div>
       </div>
     </div>
     <div class="col col-12 col-sm-12 col-md-6 col-lg-4">
       <div class="block">
         <div class="title">Bonded Tokens</div>
-        <div class="value">{{summary?.bondedTokens}}</div>
+        <div class="value">{{summary?.chain.params.bonded_ratio  | percent: '0.2-2'}}</div>
       </div>
     </div>
     <div class="col col-12 col-sm-12 col-md-6 col-lg-4">
