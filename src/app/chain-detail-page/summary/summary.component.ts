@@ -68,7 +68,7 @@ export class SummaryComponent implements OnInit {
             this.summary.inflation = this.extractInflation(summary);
             this.summary.bondedTokens = this.extractBondedTokens(this.chain, summary);
             this.summary.totalSupply = this.extractTotalSupply(this.chain, summary);
-            this.summary.communityPool = this.extractCommunityPool(this.chain, summary);
+            // this.summary.communityPool = this.extractCommunityPool(this.chain, summary);
           }
         });
       let coingekoCoinId = this.chain.coingekoCoinId || this.chain.id;
@@ -166,16 +166,16 @@ export class SummaryComponent implements OnInit {
   }
 
 
-  extractCommunityPool(chain: Chain, summary: any): string {
-    let communityPool = 0;
-    summary.communityPool.forEach(function (item: any) {
-      if (item.denom === chain.denomName) {
-        communityPool = +item.amount;
-      }
-    });
-    communityPool = communityPool / Math.pow(10, chain.denomPow);
-    return this.utilsService.compactNumber(communityPool);
-  }
+  // extractCommunityPool(chain: Chain, summary: any): string {
+  //  let communityPool = 0;
+  //   summary.communityPool.forEach(function (item: any) {
+  //     if (item.denom === chain.denomName) {
+  //       communityPool = +item.amount;
+  //     }
+  //   });
+  //   communityPool = communityPool / Math.pow(10, chain.denomPow);
+  //   return this.utilsService.compactNumber(communityPool);
+  // }
 
   extractBondedTokensRatio(chain: Chain, summary: any): number {
     let bondedTokens = summary.chain.params.bonded_tokens;
@@ -184,18 +184,18 @@ export class SummaryComponent implements OnInit {
 
   extractTokensDistributionRatio(validators: any): number {
     let totalVotingPower = 0;
-    validators?.validators.forEach((validator: any) => {
+    validators.validators.forEach((validator: any) => {
       totalVotingPower += validators.validators.tokens;
     });
     let validatorsNum = 0;
     let tmpVotingPower = 0;
     let percentage = 0;
-    for (let i = 0; i < validators.length && !percentage; i++) {
-      let validator = validators[i];
-      tmpVotingPower += validator.votingPower;
+    for (let i = 0; i < validators.validators.length && !percentage; i++) {
+      let validator = validators.validators[i];
+      tmpVotingPower += validator.tokens;
       validatorsNum++;
       if (tmpVotingPower / totalVotingPower * 100 >= 50) {
-        percentage = +(validatorsNum / validators.length * 100).toFixed(2);
+        percentage = +(validatorsNum / validators.validators.length * 100).toFixed(2);
       }
     }
     return percentage;
