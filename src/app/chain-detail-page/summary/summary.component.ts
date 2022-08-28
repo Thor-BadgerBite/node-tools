@@ -639,11 +639,11 @@ export class SummaryComponent implements OnInit {
 
   drawMissedBlocksChart(validators: any): void {
 
-    validators.validators.sort((a: any, b: any) => b.delegations.total_tokens_display - a.delegations.total_tokens_display)
+    validators.validators.sort((a: any, b: any) => b.missed_blocks_periods[1]?.missed - a.missed_blocks_periods[1]?.missed)
     // validators.validators.reverse()
     let topActivevalidators = validators.validators.slice(0, 125);
-    let labels = topActivevalidators.filter((validator: any) => validator.missed_blocks && validator.active).map((validator: any) => validator.moniker);
-    let data = topActivevalidators.filter((validator: any) => validator.missed_blocks && validator.active).map((validator: any) => validator.missed_blocks);
+    let labels = validators.validators.filter((validator: any) => validator.missed_blocks_periods[1]?.missed && validator.active).map((validator: any) => validator.moniker);
+    let data = validators.validators.filter((validator: any) => validator.missed_blocks_periods[1]?.missed && validator.active).map((validator: any) => validator.missed_blocks_periods[1]?.missed);
 
     if (!data.length) {
       this.noMissedBlocks = true;
