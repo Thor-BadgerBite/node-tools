@@ -21,6 +21,7 @@ export class SummaryComponent implements OnInit {
   noMissedBlocks?: boolean;
   bondedTokensRatio?: any;
   tokensDistributionRatio?: any;
+  ValidatorSet?: any;
   athPriceRatio?: any;
 
   innerStrokeColor_SUCCESS: string;
@@ -68,6 +69,7 @@ export class SummaryComponent implements OnInit {
             this.summary.inflation = this.extractInflation(summary);
             this.summary.bondedTokens = this.extractBondedTokens(this.chain, summary);
             this.summary.totalSupply = this.extractTotalSupply(this.chain, summary);
+
             // this.summary.communityPool = this.extractCommunityPool(this.chain, summary);
           }
         });
@@ -100,6 +102,15 @@ export class SummaryComponent implements OnInit {
               innerStrokeColor: this.innerStokeColorForRatio(ratio, 10, 25),
               outerStrokeColor: this.outerStokeColorByRatio(ratio, 10, 25)
             };
+            let active = this. extractTotalActive(validators);
+            let total=this.extractTotalVal(validators);
+            let jailed=this.extractTotalJailed(validators);
+            this.ValidatorSet = {
+                active: active,
+                total: total,
+                jailed: jailed,
+            };
+
             this.drawVotingPowerChart(validators, this.chain);
             this.drawCommissionDistributionChart(validators);
             this.drawMissedBlocksChart(validators);
@@ -178,27 +189,73 @@ export class SummaryComponent implements OnInit {
   // }
 
   extractBondedTokensRatio(chain: Chain, summary: any): number {
-    let bondedTokens = summary.chain.params.bonded_tokens;
+    let bondedTokens = summary.chain.params.bonded_ratio*100;
     return bondedTokens
   }
 
+
+  extractTotalVal(validators: any): number {
+    validators.validators.sort((a: any, b: any) => b.rank - a.rank)
+    validators.validators.reverse()
+    return validators.validators.length
+  }
+  
+  extractTotalActive(validators: any): number {
+    validators.validators.sort((a: any, b: any) => b.rank - a.rank)
+    validators.validators.reverse()
+    let TotalActive=0;
+    for (let i = 0; i < validators.validators.length; i++) {
+      let validator = validators.validators[i];
+      if (validator.active==true) {
+        TotalActive++;
+      }
+    }
+    return TotalActive
+  }
+  extractTotalJailed(validators: any): number {
+    validators.validators.sort((a: any, b: any) => b.rank - a.rank)
+    validators.validators.reverse()
+    let TotalActive=0;
+    for (let i = 0; i < validators.validators.length; i++) {
+      let validator = validators.validators[i];
+      if (validator.jailed==true) {
+        TotalActive++;
+      }
+    }
+    return TotalActive
+  }
+
+
   extractTokensDistributionRatio(validators: any): number {
     validators.validators.sort((a: any, b: any) => b.rank - a.rank)
+    validators.validators.reverse()
     let totalVotingPower = 0;
-    validators.validators.forEach((validators: any) => {
-      totalVotingPower += validators.delegations.total_tokens_display;
-    });
+    totalVotingPower = this.summary?.chain.params.bonded_tokens / 1000000;
+    // validators.validators.forEach((validators: any) => {
+    //   totalVotingPower += validators.delegations.total_tokens_display;
+    // });
     let validatorsNum = 0;
     let tmpVotingPower = 0;
     let percentage = 0;
-    for (let i = 0; i < validators.validators.length && !percentage; i++) {
+    let TotalActive=0;
+    for (let i = 0; i < validators.validators.length; i++) {
       let validator = validators.validators[i];
-      tmpVotingPower +=validator.delegations.total_tokens_display;
-      validatorsNum++;
-      if (tmpVotingPower / totalVotingPower * 100 >= 50) {
-        percentage = +(validatorsNum / validators.validators.length * 100).toFixed(2);
+      if (validator.active==true) {
+        TotalActive++;
       }
     }
+    for (let i = 0; i < validators.validators.length && !percentage; i++) {
+      let validator = validators.validators[i];
+      if (validator.active==true) {
+        tmpVotingPower +=validator.delegations.total_tokens_display;
+        validatorsNum++;
+      }
+      if (tmpVotingPower / totalVotingPower * 100 >= 50) {
+        percentage = +(validatorsNum / TotalActive * 100).toFixed(2);
+      }
+    }
+    // percentage=(100-percentage);
+    percentage=percentage*2;
     return percentage;
   }
 

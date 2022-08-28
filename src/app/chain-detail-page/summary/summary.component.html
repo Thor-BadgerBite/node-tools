@@ -39,19 +39,19 @@
     <div class="col col-12 col-sm-12 col-md-6 col-lg-4">
       <div class="block">
         <div class="title">Total Validators</div>
-        <div class="value">{{tokensDistributionRatio?.ratio}}</div>
+        <div class="value">{{ValidatorSet?.total}}</div>
       </div>
     </div>
     <div class="col col-12 col-sm-12 col-md-6 col-lg-4">
       <div class="block">
         <div class="title">Active Validators</div>
-        <div class="value">{{summary?.activeValidators}}</div>
+        <div class="value">{{ValidatorSet?.active}}</div>
       </div>
     </div>
     <div class="col col-12 col-sm-12 col-md-6 col-lg-4">
       <div class="block">
-        <div class="title">Inactive Validators</div>
-        <div class="value">{{summary?.jailedValidators}}</div>
+        <div class="title">Jailed Validators</div>
+        <div class="value">{{ValidatorSet?.jailed}}</div>
       </div>
     </div>
   </div>
@@ -61,6 +61,7 @@
            ngbTooltip="This ratio shows percentage of bonded tokens in total supply. The higher this ratio the safer is the chain."
            tooltipClass="ratio-tooltip">
         <circle-progress [percent]="bondedTokensRatio?.ratio"
+                         [toFixed]="2"
                          [subtitle]="'Bonded Tokens Ratio'"
                          [innerStrokeColor]="bondedTokensRatio?.innerStrokeColor || 'rgba(208, 215, 222, 1)'"
                          [outerStrokeColor]="bondedTokensRatio?.outerStrokeColor"
@@ -70,6 +71,7 @@
            ngbTooltip="This ratio shows percentage of validators who own more than 50% of bonded tokens in total. The higher this ratio the more decentralized is the chain."
            tooltipClass="ratio-tooltip">
         <circle-progress [percent]="tokensDistributionRatio?.ratio"
+                         [toFixed]="1"
                          [subtitle]="'Tokens Distribution Ratio'"
                          [innerStrokeColor]="tokensDistributionRatio?.innerStrokeColor || 'rgba(208, 215, 222, 1)'"
                          [outerStrokeColor]="tokensDistributionRatio?.outerStrokeColor"
