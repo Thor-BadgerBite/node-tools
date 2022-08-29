@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 
 
@@ -48,7 +48,6 @@ import { UpgradeScriptsComponent } from './chain-detail-page/upgrade-scripts/upg
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FontAwesomeModule,
     FormsModule,
     HttpClientModule,
 
