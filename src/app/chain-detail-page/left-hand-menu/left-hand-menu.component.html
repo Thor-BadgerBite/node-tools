@@ -34,7 +34,8 @@
       <span class="btn-social fa fa-medium" ngbTooltip="Medium" tooltipClass="ratio-tooltip" placement="top"></span>
     </a>
     <a *ngIf="chain.discord" href="{{chain.discord}}" target="_blank">
-      <span class="btn-social fa-brabds fa-discord" ngbTooltip="Discord" tooltipClass="ratio-tooltip" placement="top"></span>
+   
+      <span class="btn-social " ngbTooltip="Discord" tooltipClass="ratio-tooltip" placement="top"><fa-icon [icon]="['fab', 'discord']"></fa-icon></span>
     </a>
     <a *ngIf="chain.telegram" href="{{chain.telegram}}" target="_blank">
       <span class="btn-social fa fa-telegram" ngbTooltip="Telegram" tooltipClass="ratio-tooltip" placement="top"></span>
