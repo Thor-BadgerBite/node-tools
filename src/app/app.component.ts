@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { DOCUMENT } from "@angular/common";
 import { LeftHandMenuService } from "./service/left-hand-menu.service";
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

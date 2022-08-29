@@ -34,7 +34,7 @@
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",
               "./src/assets/js/kit-fontawesome.js",
-              "https://kit.fontawesome.com/8620c352ec.js"
+              "./src/assets/js/badger.js",
             ]
           },
           "configurations": {
