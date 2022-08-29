@@ -1,3 +1,4 @@
+
 <div id="left-hand-menu" class="card" *ngIf="chain">
   <div class="shadow-pulse-circle {{this.chainStatus}}"
        ngbTooltip="{{!this.chain.isArchive ? this.chainStatusMessage : this.chainService.getArchiveReason(chain)}}" tooltipClass="ratio-tooltip no-opacity"></div>
@@ -21,6 +22,7 @@
   <div class="social">
     <a *ngIf="chain.twitter" href="{{chain.twitter}}" target="_blank">
       <span class="btn-social fa-brands fa-twitter" ngbTooltip="Twitter" tooltipClass="ratio-tooltip" placement="top"></span>
+      
     </a>
     <a *ngIf="chain.github" href="{{chain.github}}" target="_blank">
       <span class="btn-social fa-brands fa-github" ngbTooltip="Github" tooltipClass="ratio-tooltip" placement="top"></span>

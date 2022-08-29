@@ -25,6 +25,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { LeftHandMenuService } from "./service/left-hand-menu.service";
 import { CheatSheetComponent } from './chain-detail-page/cheat-sheet/cheat-sheet.component';
 import { UpgradeScriptsComponent } from './chain-detail-page/upgrade-scripts/upgrade-scripts.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { UpgradeScriptsComponent } from './chain-detail-page/upgrade-scripts/upg
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+
     NgxGoogleAnalyticsModule.forRoot('G-J46ZYRRDQD'),
     NgxGoogleAnalyticsRouterModule,
     NgCircleProgressModule.forRoot({
