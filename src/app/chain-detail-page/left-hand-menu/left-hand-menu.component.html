@@ -1,5 +1,4 @@
 
-<link href="/assets/css/all.css" rel="stylesheet">
 <div id="left-hand-menu" class="card" *ngIf="chain">
   <div class="shadow-pulse-circle {{this.chainStatus}}"
        ngbTooltip="{{!this.chain.isArchive ? this.chainStatusMessage : this.chainService.getArchiveReason(chain)}}" tooltipClass="ratio-tooltip no-opacity"></div>
