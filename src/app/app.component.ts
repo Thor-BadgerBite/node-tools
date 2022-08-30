@@ -9,7 +9,7 @@ import { LeftHandMenuService } from "./service/left-hand-menu.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'nodejumper';
+  title = 'BadgerBite';
 
   constructor(@Inject(DOCUMENT) private document: Document,
               private leftHandMenuService: LeftHandMenuService) {
