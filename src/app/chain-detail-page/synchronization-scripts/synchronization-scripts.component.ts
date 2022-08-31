@@ -63,21 +63,21 @@ export class SynchronizationScriptsComponent implements OnInit {
   }
 
   updateLivePeersView(): void {
-    const livePeersString = this.livePeers.join(',');
-    const peersRow = document.getElementById('peers-row');
-    if (peersRow) {
-      peersRow.innerHTML = livePeersString;
-    }
-    const updatePeersRow = document.getElementById('update-peers-row')?.getElementsByClassName('token string')?.item(0);
-    if (updatePeersRow) {
-      updatePeersRow.innerHTML = `"${livePeersString}"`;
-    }
+    // const livePeersString = this.livePeers.join(',');
+    // const peersRow = document.getElementById('peers-row');
+    // if (peersRow) {
+    //   peersRow.innerHTML = livePeersString;
+    // }
+    // const updatePeersRow = document.getElementById('update-peers-row')?.getElementsByClassName('token string')?.item(0);
+    // if (updatePeersRow) {
+    //   updatePeersRow.innerHTML = `"${livePeersString}"`;
+    // }
   }
 
   highlightRPCLink(): void {
-    const rpcLinkElement = document.getElementById('rpc-link');
-    if (rpcLinkElement) {
-      rpcLinkElement.innerHTML = `<a href="${this.chain?.rpcServer}" target="_blank">${this.chain?.rpcServer}</a>`;
-    }
+    // const rpcLinkElement = document.getElementById('rpc-link');
+    // if (rpcLinkElement) {
+    //   rpcLinkElement.innerHTML = `<a href="${this.chain?.rpcServer}" target="_blank">${this.chain?.rpcServer}</a>`;
+    // }
   }
 }
